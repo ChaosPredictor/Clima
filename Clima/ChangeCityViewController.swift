@@ -10,13 +10,15 @@ import UIKit
 
 
 //Write the protocol declaration here:
-
+protocol CanReceive {
+    func passCityName(city: String)
+}
 
 
 class ChangeCityViewController: UIViewController {
     
     //Declare the delegate variable here:
-
+    var delegate : CanReceive?
     
     //This is the pre-linked IBOutlets to the text field:
     @IBOutlet weak var changeCityTextField: UITextField!
@@ -29,12 +31,12 @@ class ChangeCityViewController: UIViewController {
         
         //1 Get the city name the user entered in the text field
         
-        
         //2 If we have a delegate set, call the method userEnteredANewCityName
-        
+        delegate?.passCityName(city: changeCityTextField.text!)
+
         
         //3 dismiss the Change City View Controller to go back to the WeatherViewController
-        
+        dismiss(animated: true, completion: nil)
         
     }
     

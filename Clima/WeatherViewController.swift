@@ -11,7 +11,7 @@ import CoreLocation
 import Alamofire
 import SwiftyJSON
 
-class WeatherViewController: UIViewController, CLLocationManagerDelegate {
+class WeatherViewController: UIViewController, CLLocationManagerDelegate, CanReceive {
     
     //Constants
     let WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather"
@@ -110,6 +110,12 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     
     //MARK: - Location Manager Delegate Methods
     /***************************************************************/
+    func passCityName(city: String) {
+        let params : [String : String] = ["q" : city, "appid" : APP_ID]
+        
+        getWeatherData(url : WEATHER_URL, parameters : params)
+    }
+    
     
     
     //Write the didUpdateLocations method here:
@@ -144,7 +150,13 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     
     
     //Write the userEnteredANewCityName Delegate method here:
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "changeCityName" {
+            let secondVC = segue.destination as! ChangeCityViewController
+            secondVC.delegate = self
+        }
+    }
+
 
     
     //Write the PrepareForSegue Method here
